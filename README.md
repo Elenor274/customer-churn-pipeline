@@ -1,74 +1,45 @@
-# Customer Churn Prediction 📉
+# Customer Churn Prediction
 
-This project aims to predict whether a customer will churn (i.e., stop using the service) based on various features from a telecom dataset.
+This project aims to predict customer churn using machine learning models. The dataset comes from a telecom company and contains information about customers' demographics and services.
 
----
+## Project Structure
 
-## 📁 Dataset
+- `customer_churn.ipynb`: Main Jupyter Notebook used during development and exploratory analysis.
+- `src/churn_prediction.py`: Python script that contains the final pipeline including data preprocessing, model training, and evaluation.
+- `.gitignore`: Standard gitignore file to exclude unnecessary files from version control.
 
-The dataset contains information about 7,043 telecom customers, with features like:
-- Customer demographics
-- Services subscribed (Internet, Phone, Streaming)
-- Contract type and tenure
-- Monthly and total charges
-- Whether the customer churned
+## Dataset
 
----
+The dataset includes the following columns:
+- Customer information (e.g., gender, tenure, contract type, monthly charges)
+- Services subscribed (e.g., InternetService, OnlineSecurity)
+- Target variable: `Churn` (Yes/No)
 
-## 🛠️ Steps Performed
+## Models Used
 
-1. **Data Cleaning:**
-   - Converted `TotalCharges` to numeric
-   - Handled missing values by filling with the column mean
+- **Logistic Regression**
+- **Random Forest Classifier**
 
-2. **Feature Engineering:**
-   - Encoded categorical variables using `LabelEncoder` and `get_dummies`
-
-3. **Splitting Data:**
-   - Used `train_test_split` to separate training and testing data
-
-4. **Scaling:**
-   - Standardized numerical features using `StandardScaler`
-
-5. **Model Training:**
-   - Logistic Regression
-   - Random Forest Classifier
-
-6. **Evaluation:**
-   - Accuracy Score
-   - Classification Report (Precision, Recall, F1-Score)
-
----
-
-## 📊 Results
+## Results
 
 | Model               | Accuracy |
 |--------------------|----------|
-| Logistic Regression | 81.7%    |
-| Random Forest       | 79.2%    |
+| Logistic Regression| 0.82     |
+| Random Forest      | 0.80     |
 
----
+### Classification Reports
 
-## 🔍 Insights
+**Logistic Regression**
+- Precision (Yes): 0.68
+- Recall (Yes): 0.58
+- F1-score (Yes): 0.63
 
-- Customers with **month-to-month contracts**, **low tenure**, and **high monthly charges** are more likely to churn.
-- Long-term contracts (e.g., one-year, two-year) reduce the churn rate significantly.
-- Features such as `Contract`, `PaymentMethod`, and `InternetService` showed strong influence.
+**Random Forest**
+- Precision (Yes): 0.66
+- Recall (Yes): 0.47
+- F1-score (Yes): 0.55
 
----
-
-## 💡 Future Improvements
-
-- Hyperparameter tuning (e.g., GridSearchCV)
-- Try advanced models like XGBoost or LightGBM
-- Perform feature importance visualization
-
----
-
-## 🧪 Run the Code
-
-To run the notebook:
+## How to Run
 
 ```bash
-jupyter notebook customer_churn.ipynb
-# customer-churn-pipeline
+python src/churn_prediction.py
