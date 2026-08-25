@@ -1,8 +1,13 @@
+<p align="center">
+  <img src="assets/social-preview.jpg" alt="Customer Churn Prediction — leakage-safe machine learning and reproducible evaluation" width="100%" />
+</p>
+
 # Customer Churn Prediction
 
 [![CI](https://github.com/Elenor274/customer-churn-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Elenor274/customer-churn-pipeline/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3%2B-F7931E?logo=scikitlearn&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-22c55e)
 
 A reproducible machine-learning workflow for predicting telecom customer churn. The project separates exploratory work from a reusable Python pipeline and evaluates models with metrics that are meaningful for an imbalanced classification problem.
 
@@ -58,3 +63,7 @@ python -m pytest -q
 ## Modeling notes
 
 Accuracy alone can hide poor churn detection when non-churning customers are the majority. This project therefore reports recall and F1 for the churn class alongside ROC-AUC. Both baseline estimators use class balancing, and preprocessing lives inside each scikit-learn pipeline to prevent information from the test set leaking into training.
+
+## License
+
+Released under the [MIT License](LICENSE).
