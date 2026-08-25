@@ -1,45 +1,60 @@
 # Customer Churn Prediction
 
-This project aims to predict customer churn using machine learning models. The dataset comes from a telecom company and contains information about customers' demographics and services.
+[![CI](https://github.com/Elenor274/customer-churn-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Elenor274/customer-churn-pipeline/actions/workflows/ci.yml)
+![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3%2B-F7931E?logo=scikitlearn&logoColor=white)
 
-## Project Structure
+A reproducible machine-learning workflow for predicting telecom customer churn. The project separates exploratory work from a reusable Python pipeline and evaluates models with metrics that are meaningful for an imbalanced classification problem.
 
-- `customer_churn.ipynb`: Main Jupyter Notebook used during development and exploratory analysis.
-- `src/churn_prediction.py`: Python script that contains the final pipeline including data preprocessing, model training, and evaluation.
-- `.gitignore`: Standard gitignore file to exclude unnecessary files from version control.
+## Highlights
+
+- Leakage-safe preprocessing fitted only on training data
+- Missing-value handling for numeric and categorical features
+- One-hot encoding with support for previously unseen categories
+- Stratified train/test split
+- Logistic Regression and Random Forest baselines
+- Accuracy, precision, recall, F1, and ROC-AUC reporting
+- Synthetic unit tests and automated CI on Python 3.11 and 3.12
+
+## Project structure
+
+```text
+.
+├── customer_churn.ipynb       # Original exploratory analysis
+├── src/
+│   └── churn_prediction.py    # Reusable training and evaluation pipeline
+├── tests/                     # Tests using synthetic customer data
+├── requirements.txt
+└── requirements-dev.txt
+```
 
 ## Dataset
 
-The dataset includes the following columns:
-- Customer information (e.g., gender, tenure, contract type, monthly charges)
-- Services subscribed (e.g., InternetService, OnlineSecurity)
-- Target variable: `Churn` (Yes/No)
+The pipeline expects the commonly used Telco Customer Churn schema, including a binary `Churn` target. The dataset is intentionally not committed to this repository; place your CSV under `data/` or pass any local path with `--data`.
 
-## Models Used
-
-- **Logistic Regression**
-- **Random Forest Classifier**
-
-## Results
-
-| Model               | Accuracy |
-|--------------------|----------|
-| Logistic Regression| 0.82     |
-| Random Forest      | 0.80     |
-
-### Classification Reports
-
-**Logistic Regression**
-- Precision (Yes): 0.68
-- Recall (Yes): 0.58
-- F1-score (Yes): 0.63
-
-**Random Forest**
-- Precision (Yes): 0.66
-- Recall (Yes): 0.47
-- F1-score (Yes): 0.55
-
-## How to Run
+## Quick start
 
 ```bash
-python src/churn_prediction.py
+git clone https://github.com/Elenor274/customer-churn-pipeline.git
+cd customer-churn-pipeline
+
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python -m src.churn_prediction \
+  --data data/WA_Fn-UseC_-Telco-Customer-Churn.csv
+```
+
+The command prints accuracy, precision, recall, F1, and ROC-AUC as JSON for each model. Actual values depend on the dataset and train/test split.
+
+## Tests
+
+```bash
+pip install -r requirements.txt -r requirements-dev.txt
+pytest -q
+```
+
+## Modeling notes
+
+Accuracy alone can hide poor churn detection when non-churning customers are the majority. This project therefore reports recall and F1 for the churn class alongside ROC-AUC. Both baseline estimators use class balancing, and preprocessing lives inside each scikit-learn pipeline to prevent information from the test set leaking into training.
