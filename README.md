@@ -52,7 +52,7 @@ The command prints accuracy, precision, recall, F1, and ROC-AUC as JSON for each
 
 ```bash
 pip install -r requirements.txt -r requirements-dev.txt
-pytest -q
+python -m pytest -q
 ```
 
 ## Modeling notes
